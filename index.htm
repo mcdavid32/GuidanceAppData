@@ -23,10 +23,46 @@ tr:nth-child(even) {
 <h2>Cooper Guidance List</h2>
 <table>
   <tr>
-  <th>Student Name</th>
+    <th>Student Name</th>
     <th>Grade</th>
     <th>Reason</th>
   </tr>
+    
 </table>
+    
+    
+<!--Initializes Firebase-->
+<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyB5J9tz76zMckrTpxOWCTghBJ-rSkX5R7I",
+    authDomain: "guidance-48a92.firebaseapp.com",
+    databaseURL: "https://guidance-48a92.firebaseio.com",
+    projectId: "guidance-48a92",
+    storageBucket: "guidance-48a92.appspot.com",
+    messagingSenderId: "741937370677"
+  };
+  firebase.initializeApp(config);
+</script>
+<script>
+    var database = firebase.database();
+    database.ref().once('value', function(snapshot){
+        if(snapshot.exists()){
+            var content = '';
+            snapshot.forEach(function(data){
+                var val = data.val();
+                content +='<tr>';
+                content += '<td>' + val.Student + '</td>';
+                content += '<td>' + val.Grade + '</td>';
+                content += '<td>' + val.Reason + '</td>';
+           
+                content += '</tr>';
+            });
+            $('#ex-table').append(content);
+        }
+    });
+</script>
+
 </body>
 </html>
